@@ -38,7 +38,7 @@ header("Location: login.php");
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="index.php"><img src="images/innovate.png">  Ready to Innovate?</a>
+			<a class="navbar-brand" href="index.php"><img src="images/innovate.png">  Assessment Tool</a>
 			<div class="smallVersion">v2.0</div>
 		</div>
 		<div class="collapse navbar-collapse" id="navbar1">

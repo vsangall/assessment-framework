@@ -4,7 +4,7 @@ session_start();
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Ready to Innovate?</title>
+	<title>Assessment Tool</title>
 	<meta content="width=device-width, initial-scale=1.0" name="viewport" >
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
@@ -39,7 +39,7 @@ session_start();
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="index.php"><img src="images/innovate.png">  Ready to Innovate?</a>
+			<a class="navbar-brand" href="index.php"><img src="images/innovate.png">  Assessment Tool</a>
 			<div id="smallVersion">v2.0</div>
 			</div>
 		<div class="collapse navbar-collapse" id="navbar1">
@@ -77,7 +77,77 @@ $userId = $_SESSION['usr_id'];
 <?php    }
 ####  End of Logged on bit ######
 ?>
- 
+
+  <h3>Welcome to the RH Assessment Tool</h3>
+
+<p class="blackWelcomeText">
+RH Assessment Tool is a web based, modular tool for assessing client in a phased approach. You can run each phase individually or using Discovery assessment, discover the best target areas for the customer and run a Preliminary Technical Validation straight after.</p>
+
+<p class="blackWelcomeText">
+The possible assessment phases are
+</p>
+ <ul>
+<li>
+       Discovery Assessment
+</li>
+<li>
+       Preliminary Technical Validation
+</li>
+</ul>
+<!-- <div class="leftTable">
+<table>
+<tr><td><img src="images/automation.png"></td><td>Automation</td></tr>
+<tr><td><img src="images/wayOfWorking.png"></td><td>Way of Working</td></tr>
+<tr><td><img src="images/architecture.png"></td><td>Architecture</td></tr>
+<tr><td><img src="images/visionLeadership.png"></td><td>Vision and Leadership</td></tr>
+<tr><td><img src="images/environment2.png"></td><td>Environment</td></tr>
+</table>
+</div>
+ --><br>
+
+<!-- <p class="blackWelcomeText">
+The assessment is mainly based on the integration, processes and methods used by both development and operations teams. To provide a more holistic overview, include members of other teams such as security, testing and business owners.</p>
+-->
+
+<?php
+
+function printAssessmentPhases($title,$area) {
+  $string = file_get_contents("assessment_phases.json");
+  $json = json_decode($string, true);
+  $i=1;
+//  $qnum = $json[$area]['qnum'];
+//  $dim = sizeof($json[$area]['Assessment'],0);
+//  while( $i <= $dim) {
+  $ii=1;
+  print '<br>';
+//  print '<h4 class="headerCentered">' . $json[$area]['Assessment'][$i]['name'] . '</h4>';
+  print '<br>';
+  while( $ii < 3) {
+
+        if($ii % 2 == 0){
+        print '<div class="divTableCell">';
+        } else {
+        print '<div class="dark">';
+        }
+        $det = $ii . '-details';
+        $sum = $ii . '-summary';
+        $ref = $ii . '-href';
+print '<br>';
+
+print '<b><ul><a href="' . $json[$area]['Assessment'][$i]['phases'][$ref] . '"><img src="images/innovate.png">' . $json[$area]['Assessment'][$i]['phases'][$ii] . '</a></ul></b>';
+print "<details>";
+print '<summary>' . $json[$area]['Assessment'][$i]['phases'][$sum] . "</summary>";
+print '<div class="detailsPane">' . $json[$area]['Assessment'][$i]['phases'][$det] . '</div>';
+print "</details>";
+print "</div>";
+$ii++;
+}
+};
+
+printAssessmentPhases("Overall Discovery Assessment","PTA");
+
+?>
+
 
 
 </body>

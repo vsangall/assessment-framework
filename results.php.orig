@@ -8,13 +8,10 @@ connectDB();
 
 # Retrieve the data
 $hash = $_REQUEST['hash'];
-$qq = "SELECT * FROM maturity_scoring WHERE hash='".mysqli_real_escape_string($db, $hash)."'";
-$qq_data = "SELECT * FROM data WHERE hash='".mysqli_real_escape_string($db, $hash)."'";
+$qq = "SELECT * FROM data WHERE hash='".mysqli_real_escape_string($db, $hash)."'";
 #print $qq;
 $res = mysqli_query($db, $qq);
-$res_data = mysqli_query($db, $qq_data);
 $data_array = mysqli_fetch_assoc($res);
-$data_array_info = mysqli_fetch_assoc($res_data);
 
 #global $data_array;
 #var_dump($data_array);
@@ -23,8 +20,8 @@ print "<h2> Results not found </h2>";
 exit;
 }
 $ops_arr = $dev_arr = $opsRound_arr = $devRound_arr = array();
-$share = $data_array_info['share'];
-$lob = $data_array_info['lob'];
+$share = $data_array['share'];
+$lob = $data_array['lob'];
 
 function getRating($num) {
 #$roundedNum = round($num,0);
@@ -274,7 +271,7 @@ $(document).ready(function() {
 foreach( $data_array as $var => $value )
     {
     	if($var=='date') continue;
-      if(substr($var[0],0,1) == "maturity") { $ops_arr[]=$value; $opsRound_arr[] = round($value);  };
+      if(substr($var[0],0,1) == "o") { $ops_arr[]=$value; $opsRound_arr[] = round($value);  };
       if(substr($var[0],0,1) == "d") { $dev_arr[]=$value; $devRound_arr[] = round($value);  };
     } 
      
@@ -283,9 +280,9 @@ foreach( $data_array as $var => $value )
       <header>
 
       <center>
-      <h2> Assessment for <?php echo $data_array_info['client']; 
-		if ($data_array_info['project'] != "") {
-			print " (" . $data_array_info['project'] . ")";		
+      <h2> Assessment for <?php echo $data_array['client']; 
+		if ($data_array['project'] != "") {
+			print " (" . $data_array['project'] . ")";		
 		}      
       ?></h2>
       </center>
@@ -297,7 +294,7 @@ foreach( $data_array as $var => $value )
     </div>
         <script>
 
-    var customerName = '<?php echo addslashes($data_array_info['client']); ?>'
+    var customerName = '<?php echo addslashes($data_array['client']); ?>'
     var customerNameNoSpaces = customerName.replace(/\s+/, "");
 
 
@@ -310,25 +307,28 @@ function checkVal(inNo) {
 	return outNo
 }
 
-    var maturity_architecture_1 = checkVal(<?php echo $data_array['maturity_architecture_1'] ?>)
-    var maturity_architecture_2 = checkVal(<?php echo $data_array['maturity_architecture_2'] ?>)
-    var maturity_architecture_3 = checkVal(<?php echo $data_array['maturity_architecture_3'] ?>)
-    var maturity_architecture_4 = checkVal(<?php echo $data_array['maturity_architecture_4'] ?>)
+    var d1 = checkVal(<?php echo $data_array['d1'] ?>)
+    var d2 = checkVal(<?php echo $data_array['d2'] ?>)
+    var d3 = checkVal(<?php echo $data_array['d3'] ?>)
+    var d4 = checkVal(<?php echo $data_array['d4'] ?>)
+    var d5 = checkVal(<?php echo $data_array['d5'] ?>)
     
-    var totalDev = maturity_architecture_1 + maturity_architecture_2 + maturity_architecture_3 + maturity_architecture_4 
+    var totalDev = d1 + d2 + d3 + d4 + d5
 
-    var maturity_automation_1 = checkVal(<?php echo $data_array['maturity_automation_1'] ?>)
-    var maturity_automation_2 = checkVal(<?php echo $data_array['maturity_automation_2'] ?>)
-    var maturity_automation_3 = checkVal(<?php echo $data_array['maturity_automation_3'] ?>)
-    var maturity_automation_4 = checkVal(<?php echo $data_array['maturity_automation_4'] ?>)
+    var o1 = checkVal(<?php echo $data_array['o1'] ?>)
+    var o2 = checkVal(<?php echo $data_array['o2'] ?>)
+    var o3 = checkVal(<?php echo $data_array['o3'] ?>)
+    var o4 = checkVal(<?php echo $data_array['o4'] ?>)
+    var o5 = checkVal(<?php echo $data_array['o5'] ?>)
 
-    var totalOps = maturity_automation_1 + maturity_automation_2 + maturity_automation_3 + maturity_automation_4 
+    var totalOps = o1 + o2 + o3 + o4 + o5
 
     var chartTitle = "DevOps Chart - " + customerName
-    var overall1 = (maturity_architecture_1+maturity_automation_1)/2;
-    var overall2 = (maturity_architecture_2+maturity_automation_2)/2;
-    var overall3 = (maturity_architecture_3+maturity_automation_3)/2;
-    var overall4 = (maturity_architecture_4+maturity_automation_4)/2;
+    var overall1 = (d1+o1)/2;
+    var overall2 = (d2+o2)/2;
+    var overall3 = (d3+o3)/2;
+    var overall4 = (d4+o4)/2;
+    var overall5 = (d5+o5)/2;
     
     var randomScalingFactor = function() {
         return Math.round(Math.random() * 4);
@@ -340,17 +340,17 @@ function checkVal(inNo) {
         data: {
             labels: ["Automation", "Way of Working", "Architecture", "Vision and Leadership", "Environment"],
             datasets: [{
-                label: "Architecture",
+                label: "Dev",
                 backgroundColor: color(window.chartColors.red).alpha(0.2).rgbString(),
                 borderColor: window.chartColors.red,
                 pointBackgroundColor: window.chartColors.red,
-                data: [maturity_architecture_1,maturity_architecture_2,maturity_architecture_3,maturity_architecture_4]
+                data: [d1,d2,d3,d4,d5]
             }, {
-                label: "Automation",
+                label: "Ops",
                 backgroundColor: color(window.chartColors.blue).alpha(0.2).rgbString(),
                 borderColor: window.chartColors.blue,
                 pointBackgroundColor: window.chartColors.blue,
-                data: [maturity_automation_1,maturity_automation_2,maturity_automation_3,maturity_automation_4]
+                data: [o1,o2,o3,o4,o5]
 
             }]
         },
@@ -382,13 +382,13 @@ var data = {
   datasets: [{
     label: customerName,
     backgroundColor: 'green',
-    data: [maturity_architecture_1, maturity_architecture_2, maturity_architecture_3, maturity_architecture_4]
+    data: [d1, d2, d3, d4, d5]
   }, {
     label: "Average",
     backgroundColor: "orange",
     data: <?php 
- #   $qq = "select avg(maturity_architecture_1) as maturity_architecture_1,avg(maturity_architecture_2) as maturity_architecture_2, avg(maturity_architecture_3) as maturity_architecture_3, avg(maturity_architecture_4) as maturity_architecture_4 from data;";    
-    $qq = "select ROUND(avg(maturity_architecture_1),2) as maturity_architecture_1, ROUND(avg(maturity_architecture_2),2) as maturity_architecture_2, ROUND(avg(maturity_architecture_3),2) as maturity_architecture_3, ROUND(avg(maturity_architecture_4),2) as maturity_architecture_4 from maturity_scoring;";    
+ #   $qq = "select avg(d1) as d1,avg(d2) as d2, avg(d3) as d3, avg(d4) as d4, avg(d5) as d5 from data;";    
+    $qq = "select ROUND(avg(d1),2) as d1, ROUND(avg(d2),2) as d2, ROUND(avg(d3),2) as d3, ROUND(avg(d4),2) as d4, ROUND(avg(d5),2) as d5 from data where share ='on' and demo <> 'on';";    
     $res = mysqli_query($GLOBALS["___mysqli_ston"], $qq);
     $row = mysqli_fetch_array($res);
      echo "[" . $row[0] . "," . $row[1] . "," . $row[2] . "," . $row[3] . "," . $row[4] . "]"; 
@@ -420,12 +420,12 @@ var data = {
   datasets: [{
     label: customerName,
     backgroundColor: 'green',
-    data: [maturity_architecture_1, maturity_architecture_2, maturity_architecture_3, maturity_architecture_4]
+    data: [d1, d2, d3, d4, d5]
   }, {
     label: "Average",
     backgroundColor: "orange",
     data: <?php 
-    $qq = "select ROUND(avg(maturity_architecture_1),2) as maturity_architecture_1, ROUND(avg(maturity_architecture_2),2) as maturity_architecture_2, ROUND(avg(maturity_architecture_3),2) as maturity_architecture_3, ROUND(avg(maturity_architecture_4),2) as maturity_architecture_4 from maturity_scoring;";    
+    $qq = "select ROUND(avg(d1),2) as d1, ROUND(avg(d2),2) as d2, ROUND(avg(d3),2) as d3, ROUND(avg(d4),2) as d4, ROUND(avg(d5),2) as d5 from data where share ='on' and demo <> 'on' and lob = '" . $lob . "';";    
     $res = mysqli_query($GLOBALS["___mysqli_ston"], $qq);
     $row = mysqli_fetch_array($res);
      echo "[" . $row[0] . "," . $row[1] . "," . $row[2] . "," . $row[3] . "," . $row[4] . "]"; 
@@ -457,12 +457,12 @@ var data = {
   datasets: [{
     label: customerName,
     backgroundColor: 'green',
-    data: [maturity_architecture_1, maturity_architecture_2, maturity_architecture_3, maturity_architecture_4]
+    data: [d1, d2, d3, d4, d5]
   }, {
     label: "Average",
     backgroundColor: "orange",
     data: <?php 
-    $qq = "select ROUND(avg(maturity_automation_1),2) as maturity_automation_1, ROUND(avg(maturity_automation_2),2) as maturity_automation_2, ROUND(avg(maturity_automation_3),2) as maturity_automation_3, ROUND(avg(maturity_automation_4),2) as maturity_automation_4 from maturity_scoring;";    
+    $qq = "select ROUND(avg(o1),2) as o1, ROUND(avg(o2),2) as o2, ROUND(avg(o3),2) as o3, ROUND(avg(o4),2) as o4, ROUND(avg(o5),2) as o5 from data where share ='on' and demo <> 'on' and lob = '" . $lob . "';";    
     $res = mysqli_query($GLOBALS["___mysqli_ston"], $qq);
     $row = mysqli_fetch_array($res);
      echo "[" . $row[0] . "," . $row[1] . "," . $row[2] . "," . $row[3] . "," . $row[4] . "]"; 
@@ -494,13 +494,13 @@ var dataOps = {
   datasets: [{
     label: customerName,
     backgroundColor: 'green',
-    data: [maturity_automation_1, maturity_automation_2, maturity_automation_3, maturity_automation_4]
+    data: [o1, o2, o3, o4, o5]
   }, {
     label: "Average",
     backgroundColor: "orange",
     data: <?php 
-#    $qq = "select avg(maturity_automation_1) as maturity_architecture_1,avg(maturity_automation_2) as maturity_architecture_2, avg(maturity_automation_3) as maturity_architecture_3, avg(maturity_automation_4) as maturity_architecture_4 from data;";    
-    $qq = "select ROUND(avg(maturity_automation_1),2) as maturity_automation_1, ROUND(avg(maturity_automation_2),2) as maturity_automation_2, ROUND(avg(maturity_automation_3),2) as maturity_automation_3, ROUND(avg(maturity_automation_4),2) as maturity_automation_4 from maturity_scoring;";    
+#    $qq = "select avg(o1) as d1,avg(o2) as d2, avg(o3) as d3, avg(o4) as d4, avg(o5) as d5 from data;";    
+    $qq = "select ROUND(avg(o1),2) as o1, ROUND(avg(o2),2) as o2, ROUND(avg(o3),2) as o3, ROUND(avg(o4),2) as o4, ROUND(avg(o5),2) as o5 from data where share ='on' and demo <> 'on';";    
     $res = mysqli_query($GLOBALS["___mysqli_ston"], $qq);
     $row = mysqli_fetch_array($res);    
      echo "[" . $row[0] . "," . $row[1] . "," . $row[2] . "," . $row[3] . "," . $row[4] . "]"; 
@@ -538,29 +538,24 @@ var myBarChart2 = new Chart(ctx2, {
 </div>
 </div>
 
-<!-- <h4 class="centeredText">Overall Assessment</h4> -->
+<h4 class="centeredText">Overall Maturity Assessment</h4>
 
 
 <?php
 ## Get an overall score by adding them all up
 $totalScore = 0;
 
-$areas = array('architecture','automation','environment','wow');
-$area_count = sizeof($areas);
+for($i = 1; $i < 6; $i++) {
+$totalScore += $data_array["d$i"];
+$totalScore += $data_array["o$i"];
+}
 print '<table class="zebra">
 <thead>
 <th>Rating</th>
 <th>Level</th>
 </thead>
 <tbody>
-for($i = 1; $i < $area_count; $i++) {
-$area = $areas[$i];
-$areaScore = $data_array[' . $area . '_total];
-$totalScore+= $data_array[' . $area .'_total];
-<tr><td><b>' . $areaScore . ' out of 5</b></td><td class="' . strtolower(getRating($areaScore)) . '">' . getRating($areaScore) . '</td>
-</tr>
-}
-<tr><td><b>' . $totalScore/5 . ' out of 5</b></td><td class="' . strtolower(getRating($totalScore/5)) . '">' . getRating($totalScore/5) . '</td>
+<tr><td><b>' . $totalScore/10 . ' out of 5</b></td><td class="' . strtolower(getRating($totalScore/10)) . '">' . getRating($totalScore/10) . '</td>
 </tr>
 </tbody>
 </table>';
@@ -578,25 +573,28 @@ $totalScore+= $data_array[' . $area .'_total];
 
 <div id="tabs">
   <ul>
-    <li><a href="#tabs-1">Maturity Assessment</a></li>
-    <li><a href="#tabs-6">Client Priorities And Goals</a></li>
+    <li><a href="#tabs-1">Overview</a></li>
 <!--     <li><a href="#tabs-2">Actions</a></li> -->
-<!--    <li><a href="#tabs-4">Notes</a></li>  -->
-<li><a href="#tabs-5">Industry Comparisons</a></li>
-<li><a href="#tabs-7">Past Assessments and History</a></li>
+    <li><a href="#tabs-4">Notes</a></li>  
+<li><a href="#tabs-5">Comparisons</a></li>
 <li><a href="#tabs-3">Workshops</a></li>
       </ul>
       <div id="tabs-1">
   <table class="bordered">   
    <thead>
         <th>Area</th>        
-        <th>Overall Maturity Scoring</th>
+        <th>Development Rating</th>
+        <th>Operations Rating</th>
     </thead>
 	<tbody> 
 <tr><td></td><td></td></tr>
 <?php
 $areas = array(
-	1 => "Overall"
+	1 => "Automation",
+	2 => "Way of working",
+	3 => "Architecture",
+	4 => "Vision and Leadership",
+	5 => "Environment"
 );
 
 function getActions($areaName,$type,$num,$comments){
@@ -609,17 +607,32 @@ print $comments[$areaName][$type][$actionField];
 
 function printGauge($areaName,$num,$chartName,$arr) {
 print '<tr><td><b>' . $areaName . '</b></td><td>
-<div id="' . $chartName . '" style="height:60px;margin-left: auto;margin-right: auto;"></div>
-	<p class="' . strtolower(getRating($arr)) . '">' . getRating($arr) . '</p>
+<div id="' . $chartName . 'Dev" style="height:80px;margin-left: auto;margin-right: auto;"></div>
+	<p class="' . strtolower(getRating($arr["d$num"])) . '">' . getRating($arr["d$num"]) . '</p>
+</td>
+<td><div id="' . $chartName . 'Ops" style="height:80px"></div>
+	<p class=" ' . strtolower(getRating($arr["o$num"])) . '">' . getRating($arr["o$num"]) . '</p>
 </td>
 </tr>';
+#print "<tr>
+#<td>&nbsp</td>";
+#print "<td><a href=\"#\" title=\"Actions for Dev " . $areaName . " Level " . floor($arr["d$num"]) . "\">Actions</a> 
+#</td>
+#	<td><a href=\"#\" title=\"Actions for Ops " . $areaName . " Level " . floor($arr["o$num"]) . "\">Actions</a>
+#	</td>
 print "</tr>";
+#print '<div id="dialog" title="Basic dialog">
+#  <p>This is an animated dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the x icon.</p>
+#</div>
+#  <p id="opener">Open Dialog</p>';
+#print '<a href="#" title="That&apos;s what this widget is">Tooltips</a>';
 }
 
-printGauge("Architecture","3","arch",$data_array["architecture_total"]);
-printGauge("Automation","1","automation",$data_array["automation_total"]);
-printGauge("Way of Working","2","wow",$data_array["wow_total"]);
-printGauge("Environment","5","env",$data_array["environment_total"]);
+printGauge("Automation","1","automation",$data_array);
+printGauge("Way of Working","2","wow",$data_array);
+printGauge("Architecture","3","arch",$data_array);
+printGauge("Vision and Leadership","4","vision",$data_array);
+printGauge("Environment","5","env",$data_array);
 
 
 
@@ -627,100 +640,6 @@ printGauge("Environment","5","env",$data_array["environment_total"]);
 
 </tbody>
 </table>	
-
-
-  <table class="bordered">
-   <thead>
-        <th>Architecture</th>
-        <th>Overall Maturity Scoring</th>
-    </thead>
-        <tbody>
-<tr><td></td><td></td></tr>
-<?php
-$areas = array(
-        1 => "Overall"
-);
-
-printGauge("Application Modularity","3","maturity_architecture_1",$data_array["maturity_architecture_1"]);
-printGauge("Infra and Network","1","maturity_architecture_2",$data_array["maturity_architecture_2"]);
-printGauge("Technical Debt","2","maturity_architecture_3",$data_array["maturity_architecture_3"]);
-printGauge("Observability and Monitoring","5","maturity_architecture_4",$data_array["maturity_architecture_4"]);
-
-
-?>
-
-</tbody>
-</table>
-
-
-  <table class="bordered">
-   <thead>
-        <th>Automation</th>
-        <th>Overall Maturity Scoring</th>
-    </thead>
-        <tbody>
-<tr><td></td><td></td></tr>
-<?php
-$areas = array(
-        1 => "Overall"
-);
-
-printGauge("Source Control Managment","3","maturity_automation_1",$data_array["maturity_automation_1"]);
-printGauge("Test Automation","1","maturity_automation_2",$data_array["maturity_automation_2"]);
-printGauge("Release Managment","2","maturity_automation_3",$data_array["maturity_automation_3"]);
-printGauge("Infrastructure Provisioning","5","maturity_automation_4",$data_array["maturity_automation_4"]);
-?>
-
-</tbody>
-</table>
-
-  <table class="bordered">
-   <thead>
-        <th>Way Of Working</th>
-        <th>Overall Maturity Scoring</th>
-    </thead>
-        <tbody>
-<tr><td></td><td></td></tr>
-<?php
-$areas = array(
-        1 => "Overall"
-);
-
-printGauge("Agile","3","arch",$data_array["maturity_wow_1"]);
-printGauge("Team Composition","1","automation",$data_array["maturity_wow_2"]);
-printGauge("Managing Work in Progress","2","wow",$data_array["maturity_wow_3"]);
-printGauge("Observability and Monitoring","5","env",$data_array["maturity_wow_4"]);
-
-
-?>
-
-</tbody>
-</table>
-
-  <table class="bordered">
-   <thead>
-        <th>Architecture</th>
-        <th>Overall Maturity Scoring</th>
-    </thead>
-        <tbody>
-<tr><td></td><td></td></tr>
-<?php
-$areas = array(
-        1 => "Overall"
-);
-
-printGauge("Application Modularity","3","arch",$data_array["maturity_architecture_1"]);
-printGauge("Infra and Network","1","automation",$data_array["maturity_architecture_2"]);
-printGauge("Technical Debt","2","wow",$data_array["maturity_architecture_3"]);
-printGauge("Observability and Monitoring","5","env",$data_array["maturity_architecture_4"]);
-
-
-?>
-
-</tbody>
-</table>
-
-
 
 	<!-- End of Tab1 Div -->    
       </div>
@@ -740,10 +659,11 @@ printGauge("Observability and Monitoring","5","env",$data_array["maturity_archit
 <!-- Read all the workshops from the json file, deduplicate then add per area -->
 <?php
 $scores = array(
-array ('area' => "automation",'title' => "Automation",'ops' => $data_array['maturity_automation_1'], 'dev' => $data_array['maturity_architecture_1'], 'total' => $data_array['maturity_architecture_1'] + $data_array['maturity_automation_1']), 
-array ('area' => "wayOfWorking",'title' => "Way of Working", 'ops' => $data_array['maturity_automation_2'], 'dev' => $data_array['maturity_architecture_2'], 'total' => $data_array['maturity_architecture_2'] + $data_array['maturity_automation_2']), 
-array ('area' => "architecture", 'title' => "Architecture", 'ops' => $data_array['maturity_automation_3'], 'dev' => $data_array['maturity_architecture_3'], 'total' => $data_array['maturity_architecture_3'] + $data_array['maturity_automation_3']), 
-array ('area' => "visionLeadership",'title' => "Vision and Leadership", 'ops' => $data_array['maturity_automation_4'], 'dev' => $data_array['maturity_architecture_4'], 'total' => $data_array['maturity_architecture_4'] + $data_array['maturity_automation_4']), 
+array ('area' => "automation",'title' => "Automation",'ops' => $data_array['o1'], 'dev' => $data_array['d1'], 'total' => $data_array['d1'] + $data_array['o1']), 
+array ('area' => "wayOfWorking",'title' => "Way of Working", 'ops' => $data_array['o2'], 'dev' => $data_array['d2'], 'total' => $data_array['d2'] + $data_array['o2']), 
+array ('area' => "architecture", 'title' => "Architecture", 'ops' => $data_array['o3'], 'dev' => $data_array['d3'], 'total' => $data_array['d3'] + $data_array['o3']), 
+array ('area' => "visionLeadership",'title' => "Vision and Leadership", 'ops' => $data_array['o4'], 'dev' => $data_array['d4'], 'total' => $data_array['d4'] + $data_array['o4']), 
+array ('area' => "environment",'title' => "Environment", 'ops' => $data_array['o5'], 'dev' => $data_array['d5'], 'total' => $data_array['d5'] + $data_array['o5'])
 );
 
 $total = array_column($scores, 'total');
@@ -798,21 +718,21 @@ print "</tr>";
 function putAreaComments($title, $area) {
 $commentLabel = "comments_" . $area;
 print "Looking for $commentLabel"; 
-if ($data_array_info["$commentLabel"] != NULL) {
+if ($data_array["$commentLabel"] != NULL) {
 print "<h4>$title</h4>";
-print '<p>' . $data_array_info["$commentLabel"] . "</p>";
+print '<p>' . $data_array["$commentLabel"] . "</p>";
 }
 }
 
-if ($data_array_info['comments'] != "") {
+if ($data_array['comments'] != "") {
 print "<h4>General Comments</h4>";
-print "<p>" . $data_array_info['comments'] . "</p>";
+print "<p>" . $data_array['comments'] . "</p>";
 }
 
 ## Fudge here as can't seem to get it in a loop ... dodgy code alert!
-if ($data_array_info['comments_automation'] != "") {
+if ($data_array['comments_automation'] != "") {
 print "<h4>Automation</h4>";
-print "<p>" . $data_array_info['comments_automation'] . "</p>";
+print "<p>" . $data_array['comments_automation'] . "</p>";
 }
 
 if ($data_array['comments_wayOfWorking'] != "") {
@@ -927,8 +847,8 @@ function between(x, min, max) {
 </script>
 <script>
   var g = new JustGage({
-    id: "automation",
-    value: <?php print $data_array['automation_total'] . "\n"; ?>,
+    id: "automationDev",
+    value: <?php print $data_array['d1'] . "\n"; ?>,
     min: 0,
     max: 5,
     decimals: 2,
@@ -942,8 +862,8 @@ function between(x, min, max) {
 </script>
 <script>
   var g = new JustGage({
-    id: "wow",
-    value: <?php print $data_array['wow_total'] . "\n"; ?>,
+    id: "automationOps",
+    value: <?php print $data_array['o1'] . "\n"; ?>,
     min: 0,
     max: 5,
     decimals: 2,
@@ -951,30 +871,13 @@ function between(x, min, max) {
         gaugeWidthScale: 1.0,
         levelColors: ["#FFDA6B","#FFDA6B", "#ffa500", "#33C7FF", "#90ee90", "00ff00"],
         counter: true,
-        levelColorsGradient: false        
+        levelColorsGradient: false    
   });
 </script>
-
-
 <script>
   var g = new JustGage({
-    id: "arch",
-    value: <?php print $data_array['architecture_total'] . "\n"; ?>,
-    min: 0,
-    max: 5,
-    decimals: 2,
-        humanFriendly : true,
-        gaugeWidthScale: 1.0,
-        levelColors: ["#FFDA6B","#FFDA6B", "#ffa500", "#33C7FF", "#90ee90", "00ff00"],
-        counter: true,
-        levelColorsGradient: false        
-  });
-</script>
-
-<script>
-  var g = new JustGage({
-    id: "vision",
-    value: <?php print $data_array['vision_total'] . "\n"; ?>,
+    id: "wowOps",
+    value: <?php print $data_array['o2'] . "\n"; ?>,
     min: 0,
     max: 5,
     decimals: 2,
@@ -987,8 +890,81 @@ function between(x, min, max) {
 </script>
 <script>
   var g = new JustGage({
-    id: "env",
-    value: <?php print $data_array['environment_total'] . "\n"; ?>,
+    id: "wowDev",
+    value: <?php print $data_array['d2'] . "\n"; ?>,
+    min: 0,
+    max: 5,
+    decimals: 2,
+        humanFriendly : true,
+        gaugeWidthScale: 1.0,
+        levelColors: ["#FFDA6B","#FFDA6B", "#ffa500", "#33C7FF", "#90ee90", "00ff00"],
+        counter: true,
+        levelColorsGradient: false    
+  });
+</script>
+
+
+<script>
+  var g = new JustGage({
+    id: "archOps",
+    value: <?php print $data_array['o3'] . "\n"; ?>,
+    min: 0,
+    max: 5,
+    decimals: 2,
+        humanFriendly : true,
+        gaugeWidthScale: 1.0,
+        levelColors: ["#FFDA6B","#FFDA6B", "#ffa500", "#33C7FF", "#90ee90", "00ff00"],
+        counter: true,
+        levelColorsGradient: false        
+  });
+</script>
+<script>
+  var g = new JustGage({
+    id: "archDev",
+    value: <?php print $data_array['d3'] . "\n"; ?>,
+    min: 0,
+    max: 5,
+    decimals: 2,
+        humanFriendly : true,
+        gaugeWidthScale: 1.0,
+        levelColors: ["#FFDA6B","#FFDA6B", "#ffa500", "#33C7FF", "#90ee90", "00ff00"],
+        counter: true,
+        levelColorsGradient: false        
+  });
+</script>
+
+<script>
+  var g = new JustGage({
+    id: "visionDev",
+    value: <?php print $data_array['d4'] . "\n"; ?>,
+    min: 0,
+    max: 5,
+    decimals: 2,
+        humanFriendly : true,
+        gaugeWidthScale: 1.0,
+        levelColors: ["#FFDA6B","#FFDA6B", "#ffa500", "#33C7FF", "#90ee90", "00ff00"],
+        counter: true,
+        levelColorsGradient: false        
+  });
+</script>
+<script>
+  var g = new JustGage({
+    id: "visionOps",
+    value: <?php print $data_array['o4'] . "\n"; ?>,
+    min: 0,
+    max: 5,
+    decimals: 2,
+        humanFriendly : true,
+        gaugeWidthScale: 1.0,
+        levelColors: ["#FFDA6B","#FFDA6B", "#ffa500", "#33C7FF", "#90ee90", "00ff00"],
+        counter: true,
+        levelColorsGradient: false        
+  });
+</script>
+<script>
+  var g = new JustGage({
+    id: "envOps",
+    value: <?php print $data_array['o5'] . "\n"; ?>,
     min: 0,
     max: 5,
     decimals: 2,
@@ -1000,106 +976,15 @@ function between(x, min, max) {
 </script>
 <script>
   var g = new JustGage({
-    id: "maturity_architecture_1",
-    value: <?php print $data_array['maturity_architecture_1'] . "\n"; ?>,
+    id: "envDev",
+    value: <?php print $data_array['d5'] . "\n"; ?>,
     min: 0,
     max: 5,
     decimals: 2,
         humanFriendly : true,
         gaugeWidthScale: 1.0,
         levelColors: ["#FFDA6B","#FFDA6B", "#ffa500", "#33C7FF", "#90ee90", "00ff00"],
-        counter: true
-  });
-</script>
-<script>
-  var g = new JustGage({
-    id: "maturity_architecture_2",
-    value: <?php print $data_array['maturity_architecture_2'] . "\n"; ?>,
-    min: 0,
-    max: 5,
-    decimals: 2,
-        humanFriendly : true,
-        gaugeWidthScale: 1.0,
-        levelColors: ["#FFDA6B","#FFDA6B", "#ffa500", "#33C7FF", "#90ee90", "00ff00"],
-        counter: true
-  });
-</script>
-<script>
-  var g = new JustGage({
-    id: "maturity_architecture_3",
-    value: <?php print $data_array['maturity_architecture_3'] . "\n"; ?>,
-    min: 0,
-    max: 5,
-    decimals: 2,
-        humanFriendly : true,
-        gaugeWidthScale: 1.0,
-        levelColors: ["#FFDA6B","#FFDA6B", "#ffa500", "#33C7FF", "#90ee90", "00ff00"],
-        counter: true
-  });
-</script>
-<script>
-  var g = new JustGage({
-    id: "maturity_architecture_4",
-    value: <?php print $data_array['maturity_architecture_4'] . "\n"; ?>,
-    min: 0,
-    max: 5,
-    decimals: 2,
-        humanFriendly : true,
-        gaugeWidthScale: 1.0,
-        levelColors: ["#FFDA6B","#FFDA6B", "#ffa500", "#33C7FF", "#90ee90", "00ff00"],
-        counter: true
-  });
-</script>
-<script>
-  var g = new JustGage({
-    id: "maturity_automation_1",
-    value: <?php print $data_array['maturity_automation_1'] . "\n"; ?>,
-    min: 0,
-    max: 5,
-    decimals: 2,
-        humanFriendly : true,
-        gaugeWidthScale: 1.0,
-        levelColors: ["#FFDA6B","#FFDA6B", "#ffa500", "#33C7FF", "#90ee90", "00ff00"],
-        counter: true
-  });
-</script>
-<script>
-  var g = new JustGage({
-    id: "maturity_automation_2",
-    value: <?php print $data_array['maturity_automation_2'] . "\n"; ?>,
-    min: 0,
-    max: 5,
-    decimals: 2,
-        humanFriendly : true,
-        gaugeWidthScale: 1.0,
-        levelColors: ["#FFDA6B","#FFDA6B", "#ffa500", "#33C7FF", "#90ee90", "00ff00"],
-        counter: true
-  });
-</script>
-<script>
-  var g = new JustGage({
-    id: "maturity_automation_3",
-    value: <?php print $data_array['maturity_automation_3'] . "\n"; ?>,
-    min: 0,
-    max: 5,
-    decimals: 2,
-        humanFriendly : true,
-        gaugeWidthScale: 1.0,
-        levelColors: ["#FFDA6B","#FFDA6B", "#ffa500", "#33C7FF", "#90ee90", "00ff00"],
-        counter: true
-  });
-</script>
-<script>
-  var g = new JustGage({
-    id: "maturity_automation_4",
-    value: <?php print $data_array['maturity_automation_4'] . "\n"; ?>,
-    min: 0,
-    max: 5,
-    decimals: 2,
-        humanFriendly : true,
-        gaugeWidthScale: 1.0,
-        levelColors: ["#FFDA6B","#FFDA6B", "#ffa500", "#33C7FF", "#90ee90", "00ff00"],
-        counter: true
+        counter: true    
   });
 </script>
 </body>

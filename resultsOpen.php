@@ -7,7 +7,7 @@
     <script src="js/justgage.js"></script>
     <link rel="stylesheet" type="text/css" href="https://overpass-30e2.kxcdn.com/overpass.css"/>
   	 <link rel="stylesheet" href="css/style.css">
-    <title>Ready to Innovate Assessment</title>
+    <title> Assessment Tool</title>
 <style media="all">
 
 body {
@@ -386,7 +386,7 @@ return $rating;
 <img src="images/docHeader.png" alt="">
 <br><br><br>
 
-<p class="bigText">Ready to Innovate</p>
+<p class="bigText">Assessment Tool</p>
 <h2>Client Recommendations Document</h2>
 <h3>Prepared for <?php echo $data_array['client']; ?></h3>
 
@@ -395,7 +395,7 @@ print "<h4>Date: " . date("l jS \of F Y", strtotime($data_array['date'])) . "</h
 ?>
 
 </center>
-<p>Thank you very much for taking part in a Ready To Innovate assessment.  This document provides a high level overview of the assessment and some possible next steps for <?php echo $data_array['client']; ?>.
+<p>Thank you very much for taking part in a RH assessment.  This document provides a high level overview of the assessment and some possible next steps for <?php echo $data_array['client']; ?>.
 </p>
 
 <h4>Originator</h4>
@@ -437,7 +437,7 @@ print "<h4>Date: " . date("l jS \of F Y", strtotime($data_array['date'])) . "</h
 Before embarking on a digital transformation initiative, customers need to know where they currently stand before deciding where they want to be.
 </p>
 <p>
-Ready to Innivate is a 45 minute assessment answering questions to evaluate the current maturity of an organization around 5 key areas.  These areas are: 
+This assessment is a 45 minute questionnaire to evaluate the current maturity of an organization around 5 key areas.  These areas are: 
 </p>
 <table class="wideTable">
 	<tr>
@@ -505,7 +505,7 @@ The output in this document shows the current maturity level, along with recomme
 
 
 <h1 id="RTI_Output_Summary">RTI Output Summary</h1>
-<p>The spider chart below shows the levels attained by <?php echo $data_array['client']; ?> during the Ready To Innovate Assessment:
+<p>The spider chart below shows the levels attained by <?php echo $data_array['client']; ?> during the Assessment:
 
 
 <?php  
@@ -911,7 +911,7 @@ print "<td>" . $data_array['comments_visionLeadership'] . "</td></tr>";
 <!-- Start of comparison -->
 <h1 id="Comparison_with_others">Comparison with others</h1>
 <p>
-The charts below show how the development and operations teams at <?php echo $data_array['client']; ?> compare to other organisations who have taken the Ready To Innovate assessment
+The charts below show how the development and operations teams at <?php echo $data_array['client']; ?> compare to other organisations who have taken the assessment
 </p>
 <h2 id="Development">Development</h2>
 <canvas id="myChartDev"></canvas>
@@ -926,7 +926,7 @@ The charts below show how the development and operations teams at <?php echo $da
 
 <p>Red Hat Consulting follows a repeatable framework for defining and implementing solutions with high value for our clients. That framework outlines a series of phases that each contribute to a clearly defined Client business driven goal. Red Hat Consulting aims to provide focused Client value across the areas of people, process, and technology, whilst also providing a supporting role in establishing bigger picture IT Transformation initiatives. </p>
  
-<p>Beginning with a Ready To Innovate Session, Red Hat helps you understand your As-Is IT Organisational State. The 5 axis of focus provide a way of outlining areas of accomplishment and improvement within the Operations and Development teams within your IT Organisation. The focus areas highlight the core foundations of Native Cloud platforms, Advanced Software Development techniques and most importantly Strategy and Culture. Used simply as a discussion point or more seriously as a means of highlighting future areas for investment, the RTI State graph represents a window into your Organisation. As part of the analysis Red Hat can guide and advise on follow up focus areas for investment and next steps. This short guide provides your custom next steps based on the wide base of Red Hat Consulting offerings available as part of our Service Delivery Framework. 
+<p>Beginning with an assessment session, Red Hat helps you understand your As-Is IT Organisational State. The 5 axis of focus provide a way of outlining areas of accomplishment and improvement within the Operations and Development teams within your IT Organisation. The focus areas highlight the core foundations of Native Cloud platforms, Advanced Software Development techniques and most importantly Strategy and Culture. Used simply as a discussion point or more seriously as a means of highlighting future areas for investment, the RTI State graph represents a window into your Organisation. As part of the analysis Red Hat can guide and advise on follow up focus areas for investment and next steps. This short guide provides your custom next steps based on the wide base of Red Hat Consulting offerings available as part of our Service Delivery Framework. 
 </p>
  
 <p>Following the RTI session, the next steps are defined within the follow on focused Discover phase, which starts with a free, focused “Universal Discovery Session” aligned with defined topics provides an opportunity to drive into a defined area of investment in more detail, mapping business requirements, defining IT Organisational initiatives and engagement areas and assisting with strategy and approach. The Discovery Session is the starting point of a Red Hat Consulting engagement. This guide also proposes your custom Discovery Session next steps based on your RTI State graph and chosen areas of IT investment. 

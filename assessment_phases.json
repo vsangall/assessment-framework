@@ -1,0 +1,22 @@
+{
+   "PTA":{
+      "Assessment":{
+         "1":{
+            "name":"Application Modularity",
+            "part1":"Are you planning to refactor your applicaiton for increasing the modularity?",
+            "part2":"Do you have issues in software delivery speed due to modularity?",
+            "phases":{
+               "1":"1. Start an Overall Discovery Assessment",
+               "1-summary":"<ul>More info</ul>",
+               "1-href":"assess.php",
+               "1-details":"<p>Get an understanding of the client immediate needs and strategic goals and objectives, as well as an overview of its devops maturity level.</p><p>The assessment consider five areas:</p><ul><li>Automation</li><li>Way of Working</li><li>Architecture</li><li>Vision and Leadership</li><li>Environment</li></ul><p>Following completion of the assessment, you will be provided with a set of next steps and recommendations that support more in-depth follow up workshops into the challenges and opportunities that face your business.</p><p>The assessment is mainly based on the integration, processes and methods used by both development and operations teams. To provide a more holistic overview, include members of other teams such as security, testing and business owners.</p>",
+               "2":"2. Start a Preliminary Technical Verification",
+               "2-href":"pta.php",
+               "2-summary":"<ul>More info</ul>",
+               "2-details":"<p>PTA or Preliminary Technical Assessment, is a specific assessment to measure the readiness of the client and the team to deliver a specific RH solution.</p><p>Available PTA are:</p><ul><li>RHACM</li><li>Automation Adoption Joruney</li><li>Container Journey</li>"
+
+            }
+         }
+      }
+   }
+}

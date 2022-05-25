@@ -21,13 +21,12 @@ include('functionPutFieldsets.php');
 
 
 <script src="js/jquery-1.12.4.js"></script>
-<script src="js/jquery.qtip.min.js"></script>
 <script src="js/jquery-ui.js"></script>
+<script src="js/jquery.qtip.min.js"></script>
 <script>$.fn.slider = null</script>  
-<script src="js/bootstrap-slider.js"></script>
+<script src="js/bootstrap-slider.js"></script>  
 <script src="js/bootstrap-toggle.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>  
 
 <script type="text/javascript" >
   $( function() {
@@ -102,7 +101,7 @@ $("#input").slider({
 
   <!-- One "tab" for each step in the form: -->
   <div class="tab">
-  <h3>Discovery Assessment</h3>
+  <h3>Welcome to the RH Assessment Tool</h3>
 
 <p class="blackWelcomeText">
 RH Assessment Tool is a web based tool to get an understanding of the current state of your development and operational teams' capabilities that contribute towards software delivery performance and your organisation's strategic goals and objectives.</p>
@@ -209,7 +208,7 @@ print '</div>';
 print '<div class="column" style="width: 15%;">';
 print "
 <h4 class='headerCentered'> Client Goal/Ambition </h4>";
-print '<input type="checkbox" data-toggle="toggle" data-on="Yes" data-off="No" name="goal_' . $area .'_' . $i . '" data-size="normal" data-onstyle="success" data-onstyle="info">';
+print '<input type="checkbox" data-toggle="toggle" data-on="Yes" data-off="No" name="goal_' . $area .'_' . $i . '" id="goal_' . $area .'_' . $i . '" data-size="normal" data-onstyle="success" data-onstyle="info">';
 print '</div>';
 print '<div class="column" style="width: 30%;">';
 print '<br>';
@@ -221,7 +220,7 @@ print '</div>';
 print '<div class="column" style="width: 15%;">';
 print "
 <h4 class='headerCentered'> Client Issue/Need </h4>";
-print '<input type="checkbox" data-toggle="toggle" data-on="Yes" data-off="No" name="need_' . $area . '_' . $i . '" data-size="normal" data-onstyle="success" data-onstyle="info">';
+print '<input type="checkbox" data-toggle="toggle" data-on="Yes" data-off="No" name="need_' . $area . '_' . $i . '" id="need_' . $area . '_' . $i . '" data-size="normal" data-onstyle="success" data-onstyle="info">';
 print '</div>';
 #print '<div class="column" style="width: 15%;">';
 #print "
@@ -245,10 +244,6 @@ function printMaturityModel($title,$area) {
   $dim = sizeof($json[$area]['Assessment'],0);
   while( $i <= $dim) {
   $ii=1;
-  print '<br>';
-  print '<br>';
-  print '<h4 class="headerCentered">' . $json[$area]['Assessment'][$i]['name'] . '</h4>';
-  print '<br>';
   while( $ii < 6) {
 
         if($ii % 2 == 0){
@@ -261,7 +256,7 @@ function printMaturityModel($title,$area) {
 print '<b>Level ' . $ii . ' </b>';
 print "<details>";
 print '<summary>' . $json[$area][$i] . "</summary>";
-print '<div class="detailsPane">' . $json[$area]['Assessment'][$i]['maturity']["$sum"] . '</div>';
+print '<div class="detailsPane">' . $json[$area][Assessment][$i]['maturity']["$sum"] . '</div>';
 print "</details>";
 print "</div>";
 $ii++;
@@ -269,7 +264,7 @@ $ii++;
 print '<br>';
 print "
 <h4 class='headerCentered'> Maturity Level </h4>";
-print '<input data-slider-id="sliderCol" class="slider" type="range" data-slider-value="1" name="maturity_' . $area .'_' . $i . '" type="text" data-slider-rangeHighlights=[{ "start": 0, "end": 2, "class": "category1" }, { "start": 2, "end": 3.5, "class": "category2" }, { "start": 3.5, "end": 5, "class": "category3" }] />';
+print '<input data-slider-id="sliderCol" class="slider" type="range" data-slider-value="1"  name="maturity_' . $area .'_' . $i . '" id="maturity_' . $area .'_' . $i . '" type="text" data-slider-rangeHighlights=[{ "start": 0, "end": 2, "class": "category1" }, { "start": 2, "end": 3.5, "class": "category2" }, { "start": 3.5, "end": 5, "class": "category3" }] />';
 $i++;
 print '<br>';
 }
@@ -298,25 +293,14 @@ print '<br>';
   </div>
 
   <div class="tab">
-<?php printOverview("Environment","environment");  ?>
-<?php printClientQuestionnaire("Environment","environment");  ?>
+<?php printOverview("Way of Working","wayOfWorking");  ?>
+<?php printClientQuestionnaire("Way of Working","wayOfWorking");  ?>
   </div>
 
   <div class="tab">
-<?php printOverview("Environment","environment");  ?>
-<?php printMaturityModel("Environment","environment");  ?>
+<?php printOverview("Way of Working","wayOfWorking");  ?>
+<?php printMaturityModel("Way of Working","wayOfWorking");  ?>
   </div>
-
-  <div class="tab">
-<?php printOverview("Way of Working","wow");  ?>
-<?php printClientQuestionnaire("Way of Working","wow");  ?>
-  </div>
-
-  <div class="tab">
-<?php printOverview("Way of Working","wow");  ?>
-<?php printMaturityModel("Way of Working","wow");  ?>
-  </div>
-
 
   <div style="overflow:auto;">
     <div style="float:right;">
@@ -333,9 +317,7 @@ print '<br>';
     <span class="step"></span>
     <span class="step"></span>    
     <span class="step"></span>     
-    <span class="step"></span>
-    <span class="step"></span>
-    <span class="step"></span>
+    <span class="step"></span>     
          </div>
 </form>
 
@@ -494,21 +476,22 @@ document.addEventListener("click", closeAllSelect);
 
 
 
+
   <script>
-$(".slider").slider({
+  $(".slider").slider({
     step: 0.5,
     min: 1,
     max: 5,
     value: 1,
-    ticks: [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5],
+    ticks: [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5]
 
     slide: function(event, ui) {
-        //$("input[name=" + $(this).attr("id")).val(ui.value);
-      $("input[name=" + $(this).attr("id")).val((ui.value / 10) - 0.1 + 1);
-    }
+     $("input[name=" + $(this).attr("id")).text(ui.value);
+     $("input[name=" + $(this).attr("id")).text((ui.value / 10) - 0.1 + 1);
+     }
 });
-  </script>
 
+  </script>
 <div>
 <script type="text/javascript" >
  $(document).ready(function()

@@ -2,8 +2,8 @@
 function connectDB() {
 ## Database stuff
 $db_svc = getenv('MYSQL_SVC', true) ?: "localhost";
-$db_user = getenv('MYSQL_USER', true) ?: "XXXXX";
-$db_pass = getenv('MYSQL_PASSWORD', true) ?: "XXXXX";
+$db_user = getenv('MYSQL_USER', true) ?: "mysql";
+$db_pass = getenv('MYSQL_PASSWORD', true) ?: "mysql";
 $db_name = getenv('MYSQL_DATABASE', true) ?: "spider";
 
 global $db;

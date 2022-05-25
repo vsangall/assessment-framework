@@ -290,5 +290,21 @@ print '
 
 }
 
+function putPTA() {
+print '
+  <fieldset>
+    <label for="pta"></label>
+
+    <select name="pta" id="pta">
+<option value="OCP">OCP</option>
+<option value="AAJ">AAJ</option>
+<option value="RHACM">RHACM</option>
+
+</select>
+
+</fieldset>
+';
+}
+
 
 ?>

@@ -29,7 +29,7 @@ connectDB();
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Ready to Innovate?</title>
+	<title>Assessment Tool</title>
 	<meta content="width=device-width, initial-scale=1.0" name="viewport" >
 	<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
 <link rel="stylesheet" href="css/style.css" />
@@ -46,7 +46,7 @@ connectDB();
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="assess.php"><img src="images/innovate.png">  Ready to Innovate?</a>
+			<a class="navbar-brand" href="assess.php"><img src="images/innovate.png">  Assessment Tool</a>
 			<div id="smallVersion">v2.0</div>
 		</div>
 		<!-- menu items -->

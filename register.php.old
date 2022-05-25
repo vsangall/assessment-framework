@@ -62,15 +62,15 @@ if (isset($_POST['signup'])) {
 //$curl = curl_init();
 
 // Configure options, incl. post-variables to send.
-//curl_setopt_array($curl, array(
-//    CURLOPT_RETURNTRANSFER => 1,
-//   CURLOPT_URL => 'https://www.google.com/recaptcha/api/siteverify',
-//    CURLOPT_POST => 1,
-//    CURLOPT_POSTFIELDS => array(
-//        'secret' => $captcha_secretkey,
-//       'response' => $_POST['g-recaptcha-response']
-//    )
-//));
+curl_setopt_array($curl, array(
+    CURLOPT_RETURNTRANSFER => 1,
+    CURLOPT_URL => 'https://www.google.com/recaptcha/api/siteverify',
+    CURLOPT_POST => 1,
+    CURLOPT_POSTFIELDS => array(
+        'secret' => $captcha_secretkey,
+        'response' => $_POST['g-recaptcha-response']
+    )
+));
 
 // Send request. Due to CURLOPT_RETURNTRANSFER, this will return reply as string.
 //$resp = curl_exec($curl);
@@ -82,7 +82,7 @@ if (isset($_POST['signup'])) {
 //if(strpos($resp, '"success": true') !== FALSE) {
 #    echo "Verified.";
 		$qq = "INSERT INTO users(name,email,password,uuid) VALUES('" . $name . "', '" . $email . "', '" . md5($password) . "',uuid())	";
-		print "Query: $qq";
+#		print "Query: $qq";
 		if(mysqli_query($GLOBALS["___mysqli_ston"], $qq )) {
 			$successmsg = "<h2>Successfully Registered! <a href='login.php'>Click here to Login</a></h2>";
 		} else {
@@ -161,6 +161,11 @@ if (isset($_POST['signup'])) {
 						<input type="password" name="cpassword" placeholder="Confirm Password" required class="form-control" />
 						<span class="text-danger"><?php if (isset($cpassword_error)) echo $cpassword_error; ?></span>
 					</div>
+    <div>
+        <?php #echo Securimage::getCaptchaHtml() ?>
+        						<span class="text-danger"><?php if (isset($captcha_error)) echo "<br>$captcha_error"; ?></span>
+    </div>
+<div class="g-recaptcha" data-sitekey="<?php echo $captcha_sitekey; ?>"></div>
 					<div class="form-group">
 						<input type="submit" name="signup" value="Sign Up" class="btn btn-primary" />
 					</div>

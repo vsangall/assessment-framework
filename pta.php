@@ -102,7 +102,7 @@ $("#input").slider({
 
   <!-- One "tab" for each step in the form: -->
   <div class="tab">
-  <h3>Discovery Assessment</h3>
+  <h3>Preliminary Technical Validation</h3>
 
 <p class="blackWelcomeText">
 RH Assessment Tool is a web based tool to get an understanding of the current state of your development and operational teams' capabilities that contribute towards software delivery performance and your organisation's strategic goals and objectives.</p>
@@ -144,7 +144,10 @@ Following completion of the assessment, you will be provided with a set of next 
 <p class="blackWelcomeText">
 The assessment is mainly based on the integration, processes and methods used by both development and operations teams. To provide a more holistic overview, include members of other teams such as security, testing and business owners.</p>
 </p>
-  </div>
+<p>Please select Country and Line of Business using the drop down lists</p>
+<?php putPTA();?>
+</div>
+
   <div class="tab"><h4>Customer Details</h4>
     <p><input placeholder="Client Name" oninput="this.className = ''" name="customerName" ></p>
     <p><input placeholder="Email Address" oninput="this.className = ''" name="rhEmail"  ></p>
@@ -168,7 +171,8 @@ The assessment is mainly based on the integration, processes and methods used by
 
 <?php putLoBs();?>
   </div>  
-  
+
+
 <?php
 
 function printOverview($title,$area) {
