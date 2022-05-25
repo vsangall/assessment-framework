@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 22, 2019 at 07:52 AM
--- Server version: 10.3.12-MariaDB
--- PHP Version: 7.2.18
+-- Generation Time: May 25, 2022 at 06:05 AM
+-- Server version: 10.3.28-MariaDB-log
+-- PHP Version: 7.2.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -18,6 +17,35 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
+--
+-- Database: `spider`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `client_scoring`
+--
+
+CREATE TABLE `client_scoring` (
+  `hash` varchar(100) DEFAULT NULL,
+  `architecture_total` float NOT NULL DEFAULT 0,
+  `architecture_area_1` float NOT NULL DEFAULT 0,
+  `architecture_area_2` float NOT NULL DEFAULT 0,
+  `architecture_area_4` float NOT NULL DEFAULT 0,
+  `automation_area_1` float NOT NULL DEFAULT 0,
+  `automation_area_2` float NOT NULL DEFAULT 0,
+  `automation_area_3` float NOT NULL DEFAULT 0,
+  `automation_area_4` float NOT NULL DEFAULT 0,
+  `environment_area_1` float NOT NULL DEFAULT 0,
+  `environment_area_2` float NOT NULL DEFAULT 0,
+  `environment_area_3` float NOT NULL DEFAULT 0,
+  `environment_area_4` float NOT NULL DEFAULT 0,
+  `wow_area_1` float NOT NULL DEFAULT 0,
+  `wow_area_2` float NOT NULL DEFAULT 0,
+  `wow_area_3` float NOT NULL DEFAULT 0,
+  `wow_area_4` float NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -34,16 +62,6 @@ CREATE TABLE `data` (
   `country` varchar(100) NOT NULL,
   `region` varchar(20) DEFAULT NULL,
   `lob` varchar(100) NOT NULL,
-  `o1` float NOT NULL,
-  `o2` float NOT NULL,
-  `o3` float NOT NULL,
-  `o4` float NOT NULL,
-  `o5` float NOT NULL,
-  `d1` float NOT NULL,
-  `d2` float NOT NULL,
-  `d3` float NOT NULL,
-  `d4` float NOT NULL,
-  `d5` float NOT NULL,
   `hash` varchar(50) NOT NULL,
   `date` timestamp NOT NULL DEFAULT current_timestamp(),
   `share` varchar(3) NOT NULL DEFAULT 'on',
@@ -54,8 +72,92 @@ CREATE TABLE `data` (
   `comments_architecture` text DEFAULT NULL,
   `comments_environment` text DEFAULT NULL,
   `comments_visionLeadership` text DEFAULT NULL,
-  `demo` text DEFAULT NULL
+  `need_architecture_1` varchar(3) NOT NULL,
+  `need_architecture_2` varchar(3) NOT NULL,
+  `need_automation_1` varchar(3) NOT NULL,
+  `need_automation_2` varchar(3) NOT NULL,
+  `need_environment_1` varchar(3) NOT NULL,
+  `need_environment_2` varchar(3) NOT NULL,
+  `need_wow_1` varchar(3) NOT NULL,
+  `need_wow_2` varchar(3) NOT NULL,
+  `need_architecture_3` varchar(3) NOT NULL,
+  `need_architecture_4` varchar(3) NOT NULL,
+  `need_automation_3` varchar(3) NOT NULL,
+  `need_automation_4` varchar(3) NOT NULL,
+  `need_wow_3` varchar(3) NOT NULL,
+  `need_environment_3` varchar(3) NOT NULL,
+  `need_environment_4` varchar(3) NOT NULL,
+  `need_wow_4` varchar(3) NOT NULL,
+  `goal_architecture_1` varchar(3) NOT NULL,
+  `goal_architecture_2` varchar(3) NOT NULL,
+  `goal_architecture_3` varchar(3) NOT NULL,
+  `goal_architecture_4` varchar(3) NOT NULL,
+  `goal_automation_1` varchar(3) NOT NULL,
+  `goal_automation_2` varchar(3) NOT NULL,
+  `goal_automation_3` varchar(3) NOT NULL,
+  `goal_automation_4` varchar(3) NOT NULL,
+  `goal_wow_1` varchar(3) NOT NULL,
+  `goal_wow_2` varchar(3) NOT NULL,
+  `goal_wow_3` varchar(3) NOT NULL,
+  `goal_environment_1` varchar(3) NOT NULL,
+  `goal_environment_2` varchar(3) NOT NULL,
+  `goal_environment_3` varchar(3) NOT NULL,
+  `goal_environment_4` varchar(3) NOT NULL,
+  `goal_wow_4` varchar(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `lov_client_scoring`
+--
+
+CREATE TABLE `lov_client_scoring` (
+  `id` int(3) NOT NULL,
+  `pov` varchar(100) DEFAULT NULL,
+  `score` float DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `lov_client_scoring`
+--
+
+INSERT INTO `lov_client_scoring` (`id`, `pov`, `score`) VALUES
+(1, 'goal meet need', 2),
+(2, 'need unaddressed', 1.5),
+(3, 'future ambition not current need', 1),
+(4, 'not an area of interest', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `maturity_scoring`
+--
+
+CREATE TABLE `maturity_scoring` (
+  `hash` varchar(100) DEFAULT NULL,
+  `architecture_total` float DEFAULT NULL,
+  `maturity_architecture_1` float DEFAULT NULL,
+  `maturity_architecture_2` float DEFAULT NULL,
+  `maturity_architecture_3` float DEFAULT NULL,
+  `maturity_architecture_4` float DEFAULT NULL,
+  `maturity_automation_1` float DEFAULT NULL,
+  `automation_total` float DEFAULT NULL,
+  `environment_total` float DEFAULT NULL,
+  `wow_total` float DEFAULT NULL,
+  `maturity_automation_2` float DEFAULT NULL,
+  `maturity_automation_3` float DEFAULT NULL,
+  `maturity_automation_4` float DEFAULT NULL,
+  `maturity_environment_1` float DEFAULT NULL,
+  `maturity_environment_2` float DEFAULT NULL,
+  `maturity_environment_3` float DEFAULT NULL,
+  `maturity_environment_4` float DEFAULT NULL,
+  `maturity_wow_1` float DEFAULT NULL,
+  `maturity_wow_2` float DEFAULT NULL,
+  `maturity_wow_3` float DEFAULT NULL,
+  `maturity_wow_4` float DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 -- --------------------------------------------------------
 
 --
@@ -83,6 +185,12 @@ ALTER TABLE `data`
   ADD UNIQUE KEY `hash` (`hash`);
 
 --
+-- Indexes for table `lov_client_scoring`
+--
+ALTER TABLE `lov_client_scoring`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -97,6 +205,12 @@ ALTER TABLE `users`
 --
 ALTER TABLE `data`
   MODIFY `id` int(3) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `lov_client_scoring`
+--
+ALTER TABLE `lov_client_scoring`
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `users`
